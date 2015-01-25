@@ -95,8 +95,8 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
           if (this.categoryId) var disqus_category_id = this.categoryId;
 
           var el = this;
-          var t = this.shadowRoot.querySelector('#disqus');
-          var clone = document.importNode(t, true);
+          var disq = this.shadowRoot.querySelector('#disqus');
+          var clone = document.importNode(disq, true);
 
           document.body.appendChild(clone);
           
