@@ -1,0 +1,17 @@
+{
+  "name": "disqus-comments",
+  "version": "0.1.0",
+  "keywords": [
+    "polymer",
+    "web-components",
+    "disqus",
+    "comments"
+  ],
+  "main": "disqus-comments.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^2.0.0"
+  }
+}

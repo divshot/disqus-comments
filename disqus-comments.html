@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Add a Disqus comment thread to your Polymer application.
+
+##### Example
+
+    <disqus-comments shortname="divshot"></disqus-comments>
+
+To style paragraphs and links, use the following CSS in a global stylesheet:
+
+#disqus_thread p { }
+#disqus_thread a { }
+
+@element disqus-comments
+@blurb Add a Disqus comment thread to your Polymer application.
+@status alpha
+@homepage http://elements.divshot.io/disqus-comments
+-->
+<polymer-element name="disqus-comments" attributes="shortname identifier url">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div id="disqus">
+      <div id="disqus_thread"></div>
+    </div>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+      Polymer({
+        /**
+         * A shortname is the unique identifier assigned to a Disqus site.
+         * All the comments posted to a site are referenced with the shortname.
+         *
+         * @attribute shortname
+         * @type string
+         * @default 'text'
+         */
+        shortname: '',
+        /**
+         * A Disqus identifier is a unique string which is used to look up a page's
+         * thread in the Disqus system.
+         *
+         * @attribute identifier
+         * @type string
+         * @default 'text'
+         */
+        identifier: '',
+        /**
+         * Tells the Disqus service the URL of the current page.
+         * If undefined, Disqus will take the window.location.href.
+         *
+         * @attribute url
+         * @type string
+         * @default 'text'
+         */
+        url: '',
+        attached: function() {
+          var disqus_shortname = this.shortname;
+          var disqus_identifier = this.identifier;
+          var disqus_url = this.url;
+
+          var el = this;
+          var t = this.shadowRoot.querySelector('#disqus');
+          var clone = document.importNode(t, true);
+
+          document.body.appendChild(clone);
+          
+          window.disqus_config = function() {
+            this.callbacks.onReady = [function() {
+              el.shadowRoot.appendChild(clone);
+            }];
+          };
+
+          var dsq = document.createElement('script');
+          dsq.type = 'text/javascript';
+          dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }
+      });
+    })();
+  </script>
+</polymer-element>
