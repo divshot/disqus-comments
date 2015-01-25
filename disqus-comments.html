@@ -17,7 +17,7 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
 @status alpha
 @homepage http://elements.divshot.io/disqus-comments
 -->
-<polymer-element name="disqus-comments" attributes="shortname identifier url">
+<polymer-element name="disqus-comments" attributes="shortname identifier title url categoryId">
   <template>
     <style>
       :host {
@@ -41,6 +41,7 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
          * @default 'text'
          */
         shortname: '',
+
         /**
          * A Disqus identifier is a unique string which is used to look up a page's
          * thread in the Disqus system.
@@ -50,6 +51,17 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
          * @default 'text'
          */
         identifier: '',
+
+        /**
+         * Tells the Disqus service the title of the current page.
+         * This is used when creating the thread on Disqus for the first time.
+         *
+         * @attribute title
+         * @type string
+         * @default 'text'
+         */
+        title: '',
+
         /**
          * Tells the Disqus service the URL of the current page.
          * If undefined, Disqus will take the window.location.href.
@@ -59,10 +71,28 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
          * @default 'text'
          */
         url: '',
+
+        /**
+         * Tells the Disqus service the category to be used for the current page.
+         * This is used when creating the thread on Disqus for the first time.
+         *
+         * @attribute categoryId
+         * @type string
+         * @default 'text'
+         */
+        categoryId: '',
+
         attached: function() {
-          var disqus_shortname = this.shortname;
-          var disqus_identifier = this.identifier;
-          var disqus_url = this.url;
+          if (this.shortname) {
+            var disqus_shortname = this.shortname;
+          } else {
+            console.error('Required: Please provide a Disqus shortname.');
+          }
+
+          if (this.identifier) var disqus_identifier = this.identifier;
+          if (this.title) var disqus_title = this.title;
+          if (this.url) var disqus_url = this.url;
+          if (this.categoryId) var disqus_category_id = this.categoryId;
 
           var el = this;
           var t = this.shadowRoot.querySelector('#disqus');
