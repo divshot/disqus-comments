@@ -1,4 +1,6 @@
-disqus-comments
-================
+# Disqus in Your Shadow DOM
 
-See the [component page](http://elements.divshot.io/disqus-comments) for more information.
+Integrate Disqus in your Polymer app with minimal effort. Plays nicely with Shadow DOM and
+single page web apps.
+
+[Download](https://github.com/divshot/disqus-comments/archive/master.zip) or run `bower install disqus-comments --save`.
