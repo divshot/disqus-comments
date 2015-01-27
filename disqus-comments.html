@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <!--
-Add a Disqus comment thread to your Polymer application.
+Add a Disqus comment thread to your Shadow DOM.
 
 ##### Example
 
@@ -9,11 +9,15 @@ Add a Disqus comment thread to your Polymer application.
 
 To style paragraphs and links, use the following CSS in a global stylesheet:
 
-#disqus_thread p { }
-#disqus_thread a { }
+    #disqus_thread p {
+      color: #333;
+    }
+    #disqus_thread a {
+      color: hotpink;
+    }
 
 @element disqus-comments
-@blurb Add a Disqus comment thread to your Polymer application.
+@blurb Add a Disqus comment thread to your Shadow DOM.
 @status alpha
 @homepage http://elements.divshot.io/disqus-comments
 -->
@@ -83,16 +87,16 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
         categoryId: '',
 
         attached: function() {
+          if (window.DISQUS) {
+            this.reset();
+            return;
+          }
+
           if (this.shortname) {
             var disqus_shortname = this.shortname;
           } else {
             console.error('Required: Please provide a Disqus shortname.');
           }
-
-          if (this.identifier) var disqus_identifier = this.identifier;
-          if (this.title) var disqus_title = this.title;
-          if (this.url) var disqus_url = this.url;
-          if (this.categoryId) var disqus_category_id = this.categoryId;
 
           var el = this;
           var disq = this.shadowRoot.querySelector('#disqus');
@@ -101,6 +105,10 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
           document.body.appendChild(clone);
           
           window.disqus_config = function() {
+            if (el.identifier) this.page.identifier = el.identifier;
+            if (el.title) this.page.title = el.title;
+            if (el.url) this.page.url = el.url;
+            if (el.categoryId) this.page.category_id = el.categoryId;
             this.callbacks.onReady = [function() {
               el.shadowRoot.appendChild(clone);
             }];
@@ -111,6 +119,28 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
           dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        },
+        reset: function() {
+          if (window.DISQUS) {
+            var el = this;
+            var disq = this.shadowRoot.querySelector('#disqus');
+            var clone = document.importNode(disq, true);
+
+            document.body.appendChild(clone);
+
+            DISQUS.reset({
+              reload: true,
+              config: function() {
+                if (el.identifier) this.page.identifier = el.identifier;
+                if (el.title) this.page.title = el.title;
+                if (el.url) this.page.url = el.url;
+                if (el.categoryId) this.page.category_id = el.categoryId;
+                this.callbacks.onReady = [function() {
+                  el.shadowRoot.appendChild(clone);
+                }];
+              }
+            });
+          }
         }
       });
     })();
