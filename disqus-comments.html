@@ -95,7 +95,7 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
           if (this.shortname) {
             var disqus_shortname = this.shortname;
           } else {
-            console.error('Required: Please provide a Disqus shortname.');
+            return console.error('Required: Please provide a Disqus shortname.');
           }
 
           var el = this;
