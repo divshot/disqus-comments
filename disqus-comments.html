@@ -21,7 +21,7 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
 @status alpha
 @homepage http://elements.divshot.io/disqus-comments
 -->
-<polymer-element name="disqus-comments" attributes="shortname identifier title url categoryId">
+<polymer-element name="disqus-comments" attributes="shortname identifier title url categoryId https">
   <template>
     <style>
       :host {
@@ -86,6 +86,15 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
          */
         categoryId: '',
 
+        /**
+         * Force HTTPS when loading Disqus embed script.
+         *
+         * @attribute https
+         * @type boolean
+         * @default false
+         */
+        https: false,
+
         attached: function() {
           if (window.DISQUS) {
             this.reset();
@@ -115,9 +124,10 @@ To style paragraphs and links, use the following CSS in a global stylesheet:
           };
 
           var dsq = document.createElement('script');
+          var http = (this.https) ? 'https' : 'http';
           dsq.type = 'text/javascript';
           dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          dsq.src = http + '://' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         },
         reset: function() {
