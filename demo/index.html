@@ -9,21 +9,16 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../iron-component-page/iron-component-page.html">
-
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>disqus-comments Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../disqus-comments.html">
+  </head>
 <body unresolved>
-  <!-- Note: if the main element for this repository doesn't
-       match the folder name, add a src="&lt;main-component&gt;.html" attribute,
-       where &lt;main-component&gt;.html" is a file that imports all of the
-       components you want documented. -->
-  <iron-component-page></iron-component-page>
-
+    <h1>disqus-comments</h1>
+    <p>Show Disqus comments in your Shadow DOM. Just provide a shortname and you're good to go!</p>
+    <disqus-comments shortname="disqus-comments-polymer"></disqus-comments>
 </body>
 </html>
